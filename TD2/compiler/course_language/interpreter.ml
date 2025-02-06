@@ -16,27 +16,31 @@ let operation_of_binop (op : binop) (v1 : value) (v2 : value) =
   match op,v1 with
   | Add, VInt _-> add_i v1 v2
   | Add, VFloat _-> add_f v1 v2
-  | _ -> failwith "todo operation_of_binop"
-(*  | Sub, VInt(x),VInt(y)->x-y
-  | Mul, VInt(x),VInt(y)->x*y
-  | Div, VInt(x),VInt(y)->x/y
-  | Mod, VInt(x),VInt(y)->x+y
-  | And, VBool(x),VBool(y)-> x && y
-  | Or,VBool(x),VBool(y)-> x || y
-  | Eq,VInt(x),VInt(y)->x=y
-  | Neq,VInt(x),VInt(y)->not(x=y)
-  | Lt,VInt(x),VInt(y)->x<y
-  | Gt,VInt(x),VInt(y)->x>y
-  | Leq,VInt(x),VInt(y)->(x=y)||(x<y)
-  | Geq,VInt(x),VInt(y)->(x=y)||(y<x)*)
-  
+  | Sub, VInt _-> sub_i v1 v2
+  | Sub, VFloat _-> sub_f v1 v2
+  | Mul, VInt _-> mul_i v1 v2
+  | Mul, VFloat _-> mul_f v1 v2
+  | Div, VInt _-> div_i v1 v2
+  | Div, VFloat _-> div_f v1 v2
+  | Mod, VInt _-> mod_i v1 v2
+  | Mod, VFloat _-> mod_f v1 v2
+  | And, VBool _-> and_b v1 v2
+  | Or, _ -> or_b v1 v2
+  | Eq, _ -> eq_m v1 v2
+  | Neq, _ -> not_b(eq_m v1 v2)
+  | Lt, _ -> lt_m v1 v2
+  | Gt, _ -> lt_m v2 v1
+  | Leq, _ -> or_b (eq_m v1 v2) (lt_m v1 v2)
+  | Geq, _ -> or_b (eq_m v1 v2) (lt_m v2 v1)
+  | _ -> failwith "error operation_of_binop"
 
 (* Sémantique d’une opération unaire*)
 let operation_of_unop (op : unop) (v : value) =
-  ignore (op, v);
-  ignore get_tab_pos;
-  VNone (* à faire*)
-
+  match op,v with
+  | Not,VBool b -> not_b v
+  | UMin,VInt x -> VInt(-1*x)
+  | UMin,VFloat x -> VFloat(-1. *. x)
+  | _ -> failwith "errror unop operation"
 (* Cette fonction interprète une expression et renvoie sa valeur. Vous devez traiter tous les cas possibles (cf module Ast). Reportez-vous au cours pour une explication de la sémantique. On conseille de traiter parallèlement expressions et instructions par ordre de complexité (décrit dans le cours). Vous pouvez laisser des cas non-traités simplement en leur associant [failwith "todo"] qui fera planter le programme sur ces cas, mais permettra de compiler et de traiter les autres.*)
 let rec interpret_expr (map : value Util.Environment.t)
     (map_function : (Ast.argument list * Ast.instruction) Util.Environment.t)
@@ -67,7 +71,19 @@ let rec interpret_expr (map : value Util.Environment.t)
 and interpret_instruction (map : value Util.Environment.t)
     (map_function : (Ast.argument list * Ast.instruction) Util.Environment.t)
     (instruction : Ast.instruction) =
-  ignore (map, map_function, instruction);
+    match instruction with
+    | Affect (s,e, _) ->  Util.Environment.modify map s (interpret_expr map map_function e)
+    | Block (i_l, _) -> (*List.fold_left (fun m inst ->let _= interpret_instruction m map_function inst in m) map i_l*)
+        List.iter (fun x -> interpret_instruction map map_function x) i_l
+    | IfThenElse (e, i_1, i_2,_) -> 
+      if (interpret_expr map map_function e)=VBool true 
+       then interpret_instruction map map_function i_1
+      else interpret_instruction map map_function i_2
+    |While (e,i, _ )-> 
+       if (interpret_expr map map_function e)=VBool true
+        then interpret_instruction map map_function i
+      else _
+    | _ -> failwith "todo interpret_inst"
   (*à compléter*) ()
 
 (*Cette fonction doit interpréter une déclaration de fonction. Elle consiste simplement à associer la liste des arguments et le corps de la fonction à son nom dans l’environnement [functions].*)
