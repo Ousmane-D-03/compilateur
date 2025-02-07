@@ -54,38 +54,91 @@ let rec interpret_expr (map : value Util.Environment.t)
       (match value with
       | Some i ->i
       | None -> failwith "variable non définie")
-  | Unop (u,e,_)-> let v= interpret_expr map map_function e 
-                  in  operation_of_unop u v
-  | Binop (b,e1,e2,_)-> let v1= (interpret_expr map map_function e1) and v2 = (interpret_expr map map_function e2)
-                  in  operation_of_binop b v1 v2
+  | Binop (b,e1,e2,_)->
+      let v1= (interpret_expr map map_function e1)
+      and v2 = (interpret_expr map map_function e2)
+      in  operation_of_binop b v1 v2
+  | Unop (u,e,_)->
+      let v= interpret_expr map map_function e 
+      in  operation_of_unop u v
+  | Array_val (s, e,_)->
+    let v_expr =(
+      match interpret_expr map map_function e with
+      |VInt i -> i
+      |_->failwith("not int"))
+    in
+    let name,env = (
+      match Util.Environment.get map s with
+      | Some VArray(s,env) -> s,env
+      |_->failwith("pas un tableau")
+    )
+    in
+    let v=(
+      match Util.Environment.get env (name^(string_of_int v_expr)) with
+      |Some value -> value
+      |None -> failwith("erreur")
+    )
+    in
+    v
+  | Size_tab (s,_) -> 
+    let name,env = (
+    match Util.Environment.get map s with
+    | Some VArray(s,env) -> s,env
+    |_->failwith("pas un tableau")
+    )
+    in
+    let size=(
+      match Util.Environment.get env (name^"-1") with
+      |Some value -> value
+      |None -> failwith("erreur")
+    )
+    in
+    size
+(*  | Func of string * expr list * Annotation.t *)
   | _ -> failwith "todo interpret_expr"
-(*| Array_val of string * expr * Annotation.t
-  | Size_tab of string * Annotation.t
-  | Func of string * expr list * Annotation.t *)
-
-(*  if false then ignore (interpret_expr map map_function expr);
-  VNone*)
-(*à remplacer par le code : ce code n’est là que pour que le programme compile sans warning.*)
 
 (* Cette fonction interprète une instruction. Le «and» est là pour qu’elle soit co-récursive avec interpret_expr (à cause des appels de fonctions). Elle ne renvoie rien, mais applique directement des effets de bord sur [map]. Reportez-vous au cours pour la sémantique.*)
 and interpret_instruction (map : value Util.Environment.t)
     (map_function : (Ast.argument list * Ast.instruction) Util.Environment.t)
     (instruction : Ast.instruction) =
     match instruction with
-    | Affect (s,e, _) ->  Util.Environment.modify map s (interpret_expr map map_function e)
+    | Affect (s,e, _) ->
+        let v = interpret_expr map map_function e in
+        Util.Environment.modify map s v
     | Block (i_l, _) -> (*List.fold_left (fun m inst ->let _= interpret_instruction m map_function inst in m) map i_l*)
         List.iter (fun x -> interpret_instruction map map_function x) i_l
-    | IfThenElse (e, i_1, i_2,_) -> 
-      if (interpret_expr map map_function e)=VBool true 
-       then interpret_instruction map map_function i_1
-      else interpret_instruction map map_function i_2
-    |While (e,i, _ )-> 
-      if (interpret_expr map map_function e)=VBool true
-        then let _=interpret_instruction map map_function i 
-          in interpret_instruction map map_function instruction
-      else interpret_instruction map map_function (Affect( string_of_expr e,e,expr_get_annotation e))
+    | IfThenElse (e, i_1, i_2,_) ->
+        if (interpret_expr map map_function e)=VBool true 
+        then interpret_instruction map map_function i_1
+        else interpret_instruction map map_function i_2
+    | While (e,i, _ )-> 
+        if (interpret_expr map map_function e)=VBool true
+        then(
+          interpret_instruction map map_function i;
+          interpret_instruction map map_function instruction
+        ) 
+        else ()
+    | Affect_array(s, e_index, e_expr,_) ->
+      let name, map_tab =
+        (match Util.Environment.get map s with
+        | Some VArray(s,env) -> s,env
+        |_->failwith("pas un tableau"))
+      and index =(
+        match interpret_expr map map_function e_index with
+        |VInt i -> i
+        |_->failwith("not int"))
+      and expr = interpret_expr map map_function e_expr
+      in
+        Util.Environment.modify map_tab (name^string_of_int index) expr
+        (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
+ (*   | Array_decl of type_basic * string * expr * Annotation.t
+    | Proc of string * expr list * Annotation.t  (** Procedure call*)
+    | Return of expr option * Annotation.t*)
+    | Print_str (st, _) -> print_string st
+    | Print_expr (expr, _) ->
+       print_string ("todo") 
+    | Var_decl _ -> ()
     | _ -> failwith "todo interpret_inst"
-  (*à compléter*) ()
 
 (*Cette fonction doit interpréter une déclaration de fonction. Elle consiste simplement à associer la liste des arguments et le corps de la fonction à son nom dans l’environnement [functions].*)
 let interpret_func_decl
