@@ -37,7 +37,7 @@ let operation_of_binop (op : binop) (v1 : value) (v2 : value) =
 (* Sémantique d’une opération unaire*)
 let operation_of_unop (op : unop) (v : value) =
   match op,v with
-  | Not,VBool b -> not_b v
+  | Not,VBool _ -> not_b v
   | UMin,VInt x -> VInt(-1*x)
   | UMin,VFloat x -> VFloat(-1. *. x)
   | _ -> failwith "errror unop operation"
@@ -80,9 +80,10 @@ and interpret_instruction (map : value Util.Environment.t)
        then interpret_instruction map map_function i_1
       else interpret_instruction map map_function i_2
     |While (e,i, _ )-> 
-       if (interpret_expr map map_function e)=VBool true
-        then interpret_instruction map map_function i
-      else _
+      if (interpret_expr map map_function e)=VBool true
+        then let _=interpret_instruction map map_function i 
+          in interpret_instruction map map_function instruction
+      else interpret_instruction map map_function (Affect( string_of_expr e,e,expr_get_annotation e))
     | _ -> failwith "todo interpret_inst"
   (*à compléter*) ()
 
