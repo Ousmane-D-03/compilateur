@@ -35,7 +35,7 @@ let operation_of_binop (op : binop) (v1 : value) (v2 : value) =
   | _ -> failwith "error operation_of_binop"
 
 (* Sémantique d’une opération unaire*)
-let operation_of_unop (op : unop) (v : value) =
+let operation_of_unop (op : unop) (v : value) 
   match op,v with
   | Not,VBool _ -> not_b v
   | UMin,VInt x -> VInt(-1*x)
@@ -131,8 +131,17 @@ and interpret_instruction (map : value Util.Environment.t)
       in
         Util.Environment.modify map_tab (name^string_of_int index) expr
         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
- (*   | Array_decl of type_basic * string * expr * Annotation.t
-    | Proc of string * expr list * Annotation.t  (** Procedure call*)
+    | Array_decl ( _,s,e,_)-> 
+      let _= Util.Environment.add map s 
+      and size =(
+        match interpret_expr map map_function e with
+        |VInt i -> i
+        |_->failwith("not int"))
+      in 
+      let _= Util.Environment.add map s 
+      in 
+        Util.Environment.add map (name^string_of_int size) size 
+      (*    | Proc of string * expr list * Annotation.t  (** Procedure call*)
     | Return of expr option * Annotation.t*)
     | Print_str (st, _) -> print_string st
     | Print_expr (expr, _) ->
