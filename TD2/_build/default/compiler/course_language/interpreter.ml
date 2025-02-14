@@ -35,7 +35,7 @@ let operation_of_binop (op : binop) (v1 : value) (v2 : value) =
   | _ -> failwith "error operation_of_binop"
 
 (* Sémantique d’une opération unaire*)
-let operation_of_unop (op : unop) (v : value) 
+let operation_of_unop (op : unop) (v : value) =
   match op,v with
   | Not,VBool _ -> not_b v
   | UMin,VInt x -> VInt(-1*x)
@@ -74,9 +74,9 @@ let rec interpret_expr (map : value Util.Environment.t)
     )
     in
     let v=(
-      match Util.Environment.get env (name^(string_of_int v_expr)) with
+      match Util.Environment.get map (name^(string_of_int v_expr)) with
       |Some value -> value
-      |None -> failwith("erreur")
+      |None -> failwith("erreur_array_val")
     )
     in
     v
@@ -88,9 +88,9 @@ let rec interpret_expr (map : value Util.Environment.t)
     )
     in
     let size=(
-      match Util.Environment.get env (name^"-1") with
+      match Util.Environment.get env (name^"size") with
       |Some value -> value
-      |None -> failwith("erreur")
+      |None -> failwith("erreur_size")
     )
     in
     size
@@ -131,22 +131,27 @@ and interpret_instruction (map : value Util.Environment.t)
       in
         Util.Environment.modify map_tab (name^string_of_int index) expr
         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
-    | Array_decl ( _,s,e,_)-> 
-      let _= Util.Environment.add map s 
+    | Array_decl ( _,s,e,_)->
+      let _= Util.Environment.modify map s (VArray(s^"#",map))  
       and size =(
         match interpret_expr map map_function e with
         |VInt i -> i
         |_->failwith("not int"))
       in 
-      let _= Util.Environment.add map s 
-      in 
-        Util.Environment.add map (name^string_of_int size) size 
-      (*    | Proc of string * expr list * Annotation.t  (** Procedure call*)
-    | Return of expr option * Annotation.t*)
-    | Print_str (st, _) -> print_string st
+        Util.Environment.modify map (s^"#size") (VInt size) 
+    | Proc (s,e,_)->()
+    | Print_str (st, _) -> 
+      print_string st
     | Print_expr (expr, _) ->
        print_string ("todo") 
     | Var_decl _ -> ()
+    | Return(e,_)->
+      match e with
+        | Some r ->
+          let v = interpret_expr map map_function r 
+          in 
+          Util.Environment.add map "#result" v
+        | None -> ()
     | _ -> failwith "todo interpret_inst"
 
 (*Cette fonction doit interpréter une déclaration de fonction. Elle consiste simplement à associer la liste des arguments et le corps de la fonction à son nom dans l’environnement [functions].*)
