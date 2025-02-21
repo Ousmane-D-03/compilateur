@@ -62,38 +62,27 @@ let rec interpret_expr (map : value Util.Environment.t)
       let v= interpret_expr map map_function e 
       in  operation_of_unop u v
   | Array_val (s, e,_)->
-    let v_expr =(
-      match interpret_expr map map_function e with
-      |VInt i -> i
-      |_->failwith("not int"))
-    in
-    let name,env = (
-      match Util.Environment.get map s with
-      | Some VArray(s,env) -> s,env
-      |_->failwith("pas un tableau")
-    )
-    in
-    let v=(
-      match Util.Environment.get map (name^(string_of_int v_expr)) with
-      |Some value -> value
-      |None -> failwith("erreur_array_val")
-    )
-    in
-    v
+      let name, map_tab =
+        (match Util.Environment.get map s with
+        | Some VArray(s,env) -> s,env
+        |_->failwith("pas un tableau"))
+      and index =(
+        match interpret_expr map map_function e with
+        |VInt i -> i
+        |_->failwith("not int"))
+      in
+        (match Util.Environment.get map (name^string_of_int index) with
+        | Some value -> value
+        | None -> failwith "error_array_val")
   | Size_tab (s,_) -> 
-    let name,env = (
-    match Util.Environment.get map s with
-    | Some VArray(s,env) -> s,env
-    |_->failwith("pas un tableau")
-    )
-    in
-    let size=(
-      match Util.Environment.get env (name^"size") with
-      |Some value -> value
-      |None -> failwith("erreur_size")
-    )
-    in
-    size
+      let name, map_tab =
+        (match Util.Environment.get map s with
+        | Some VArray(s,env) -> s,env
+        |_->failwith("pas un tableau"))
+      in
+        (match Util.Environment.get map (name^"size") with
+        | Some VInt value -> VInt value
+        | None -> failwith "error_size_tab")
 (*  | Func of string * expr list * Annotation.t *)
   | _ -> failwith "todo interpret_expr"
 
@@ -119,17 +108,17 @@ and interpret_instruction (map : value Util.Environment.t)
         ) 
         else ()
     | Affect_array(s, e_index, e_expr,_) ->
+      let index =(
+        match interpret_expr map map_function e_index with
+        |VInt i -> i
+        |_->failwith("not int"))
+      in 
       let name, map_tab =
         (match Util.Environment.get map s with
         | Some VArray(s,env) -> s,env
         |_->failwith("pas un tableau"))
-      and index =(
-        match interpret_expr map map_function e_index with
-        |VInt i -> i
-        |_->failwith("not int"))
-      and expr = interpret_expr map map_function e_expr
       in
-        Util.Environment.modify map_tab (name^string_of_int index) expr
+        Util.Environment.modify map_tab (name^string_of_int index) (interpret_expr map map_function e_expr)
         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
     | Array_decl ( _,s,e,_)->
       let _= Util.Environment.modify map s (VArray(s^"#",map))  
@@ -158,7 +147,9 @@ and interpret_instruction (map : value Util.Environment.t)
 let interpret_func_decl
     (functions : (Ast.argument list * Ast.instruction) Util.Environment.t)
     (func_decl : Ast.function_decl) =
-  ignore (functions, func_decl);
+  match func_decl with
+  | Func_decl (_,s,args,i,_) -> Util.Environment.add functions s (args,i)
+  | _ -> failwith "todo interpret_func_decl"  
   () (*à compléter*)
 
 (* Cette fonction utilitaire vous est fournie : elle permet de mettre la liste des arguments à la même taille que celle des paramètres de la fonction main : s’il n’y en a pas assez, on leur attribue la valeu VNone, s’il y en a trop, on ignore les derniers. Cela permet de rendre la ligne de commande un peu plus résiliente à un mauvais nombre d’argument sur l’exécution d’un programme*)
