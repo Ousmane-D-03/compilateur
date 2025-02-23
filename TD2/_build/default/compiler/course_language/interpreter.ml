@@ -83,7 +83,15 @@ let rec interpret_expr (map : value Util.Environment.t)
         (match Util.Environment.get map (name^"size") with
         | Some VInt value -> VInt value
         | None -> failwith "error_size_tab")
-(*  | Func of string * expr list * Annotation.t *)
+  | Func (s, e,_)-> 
+      let args, body = Option.get (Util.Environment.get map_function s) in
+      let args = List.map (fun (t,_,v) -> v) args in
+      let e = List.map (fun x -> interpret_expr map map_function x) e in
+      List.iter2 (fun v a -> Util.Environment.modify map v a) args e;
+      interpret_instruction map map_function body;
+      (match Util.Environment.get map "#result" with
+      | Some value -> value
+      | None -> failwith "error_func")
   | _ -> failwith "todo interpret_expr"
 
 (* Cette fonction interprète une instruction. Le «and» est là pour qu’elle soit co-récursive avec interpret_expr (à cause des appels de fonctions). Elle ne renvoie rien, mais applique directement des effets de bord sur [map]. Reportez-vous au cours pour la sémantique.*)
@@ -128,7 +136,12 @@ and interpret_instruction (map : value Util.Environment.t)
         |_->failwith("not int"))
       in 
         Util.Environment.modify map (s^"#size") (VInt size) 
-    | Proc (s,e,_)->()
+    | Proc (s,e,_)-> 
+      let args, body = Option.get (Util.Environment.get map_function s) in
+      let args = List.map (fun (t,_,v) -> v) args in
+      let e = List.map (fun x -> interpret_expr map map_function x) e in
+      List.iter2 (fun v a -> Util.Environment.modify map v a) args e;
+      interpret_instruction map map_function body
     | Print_str (st, _) -> 
       print_string st
     | Print_expr (expr, _) ->
@@ -147,7 +160,9 @@ and interpret_instruction (map : value Util.Environment.t)
 let interpret_func_decl
     (functions : (Ast.argument list * Ast.instruction) Util.Environment.t)
     (func_decl : Ast.function_decl) =
-  ignore (functions, func_decl);
+  match func_decl with
+  | Func_decl (_,s,args,i,_) -> Util.Environment.add functions s (args,i)
+  | _ -> failwith "todo interpret_func_decl"  
   () (*à compléter*)
 
 (* Cette fonction utilitaire vous est fournie : elle permet de mettre la liste des arguments à la même taille que celle des paramètres de la fonction main : s’il n’y en a pas assez, on leur attribue la valeu VNone, s’il y en a trop, on ignore les derniers. Cela permet de rendre la ligne de commande un peu plus résiliente à un mauvais nombre d’argument sur l’exécution d’un programme*)
