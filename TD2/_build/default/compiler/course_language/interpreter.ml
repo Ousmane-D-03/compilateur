@@ -83,15 +83,16 @@ let rec interpret_expr (map : value Util.Environment.t)
         (match Util.Environment.get map (name^"size") with
         | Some VInt value -> VInt value
         | None -> failwith "error_size_tab")
-  | Func (s, e,_)-> 
-      let args, body = Option.get (Util.Environment.get map_function s) in
-      let args = List.map (fun (t,_,v) -> v) args in
-      let e = List.map (fun x -> interpret_expr map map_function x) e in
-      List.iter2 (fun v a -> Util.Environment.modify map v a) args e;
-      interpret_instruction map map_function body;
-      (match Util.Environment.get map "#result" with
-      | Some value -> value
-      | None -> failwith "error_func")
+  | Func (s, e,_)->     
+    let args, body = Option.get (Util.Environment.get map_function s) in
+    let args = List.map (fun (t, _, v) -> v) args in
+    let e = List.map (fun x -> interpret_expr map map_function x) e in
+    let local_env = Util.Environment.copy map in
+    List.iter2 (fun v a -> Util.Environment.modify local_env v a) args e; 
+    interpret_instruction local_env map_function body; 
+    match Util.Environment.get local_env "#result" with
+    | Some value -> value
+    | None -> failwith "error_func"
   | _ -> failwith "todo interpret_expr"
 
 (* Cette fonction interprète une instruction. Le «and» est là pour qu’elle soit co-récursive avec interpret_expr (à cause des appels de fonctions). Elle ne renvoie rien, mais applique directement des effets de bord sur [map]. Reportez-vous au cours pour la sémantique.*)
@@ -144,8 +145,8 @@ and interpret_instruction (map : value Util.Environment.t)
       interpret_instruction map map_function body
     | Print_str (st, _) -> 
       print_string st
-    | Print_expr (expr, _) ->
-       print_string ("todo") 
+    | Print_expr (expr, _) -> 
+      print_string (string_of_value (interpret_expr map map_function expr))
     | Var_decl _ -> ()
     | Return(e,_)->
       match e with

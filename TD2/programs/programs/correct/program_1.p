@@ -3,7 +3,7 @@ x := (x + 1);
 
 null main() ::= 
 {
-   int y;
+   var int y;
    y := 1;
    print "premier\n";
    print(y);

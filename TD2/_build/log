@@ -13,11 +13,42 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -config > /tmp/dune_a5721a_output
+$ /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -config > /tmp/dune_e6ff41_output
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I compiler/course_language/.course_language.objs/byte -no-alias-deps -opaque -o compiler/course_language/.course_language.objs/byte/course_language.cmo -c -impl compiler/course_language/course_language.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I compiler/util/.util.objs/byte -no-alias-deps -opaque -o compiler/util/.util.objs/byte/util.cmo -c -impl compiler/util/util.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -bin-annot -I compiler/examples/.examples.objs/byte -no-alias-deps -opaque -o compiler/examples/.examples.objs/byte/examples__.cmo -c -impl compiler/examples/examples__.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/three_address/.three_address.objs/byte -no-alias-deps -opaque -o compiler/three_address/.three_address.objs/byte/three_address.cmo -c -impl compiler/three_address/three_address.ml)
 $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/course_language/interpreter.ml) > _build/default/compiler/course_language/.course_language.objs/course_language__Interpreter.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/util/position.ml) > _build/default/compiler/util/.util.objs/util__Position.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/three_address/three_address.cma compiler/three_address/.three_address.objs/byte/three_address.cmo)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/examples/examples_generated.ml) > _build/default/compiler/examples/.examples.objs/examples__Examples_generated.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o compiler/course_language/.course_language.objs/native/course_language.cmx -c -impl compiler/course_language/course_language.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I compiler/examples/.examples.objs/byte -I compiler/examples/.examples.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o compiler/examples/.examples.objs/native/examples__.cmx -c -impl compiler/examples/examples__.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -w -49 -nopervasives -nostdlib -g -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml-gen -no-alias-deps -opaque -o compiler/util/.util.objs/native/util.cmx -c -impl compiler/util/util.ml-gen)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/examples/examples.ml) > _build/default/compiler/examples/.examples.objs/examples.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/util/environment.ml) > _build/default/compiler/util/.util.objs/util__Environment.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -impl compiler/course_language/ast.ml) > _build/default/compiler/course_language/.course_language.objs/course_language__Ast.impl.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -intf compiler/course_language/ast.mli) > _build/default/compiler/course_language/.course_language.objs/course_language__Ast.intf.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -intf compiler/course_language/interpreter.mli) > _build/default/compiler/course_language/.course_language.objs/course_language__Interpreter.intf.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/three_address/.three_address.objs/byte -I compiler/three_address/.three_address.objs/native -intf-suffix .ml -no-alias-deps -opaque -o compiler/three_address/.three_address.objs/native/three_address.cmx -c -impl compiler/three_address/three_address.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamldep.opt -modules -intf compiler/util/environment.mli) > _build/default/compiler/util/.util.objs/util__Environment.intf.d
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/util/.util.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -no-alias-deps -opaque -open Util -o compiler/util/.util.objs/byte/util__Position.cmo -c -impl compiler/util/position.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/util/.util.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -no-alias-deps -opaque -open Util -o compiler/util/.util.objs/byte/util__Environment.cmi -c -intf compiler/util/environment.mli)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -intf-suffix .ml -no-alias-deps -opaque -open Util -o compiler/util/.util.objs/native/util__Position.cmx -c -impl compiler/util/position.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/abstract_machine/.abstract_machine.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/util/.util.objs/byte -no-alias-deps -opaque -o compiler/abstract_machine/.abstract_machine.objs/byte/abstract_machine.cmi -c -intf compiler/abstract_machine/abstract_machine.mli)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/util/.util.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -intf-suffix .ml -no-alias-deps -opaque -open Util -o compiler/util/.util.objs/byte/util__Environment.cmo -c -impl compiler/util/environment.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -intf-suffix .ml -no-alias-deps -opaque -open Util -o compiler/util/.util.objs/native/util__Environment.cmx -c -impl compiler/util/environment.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/course_language/.course_language.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/util/.util.objs/byte -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/byte/course_language__Ast.cmi -c -intf compiler/course_language/ast.mli)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/util/util.cma compiler/util/.util.objs/byte/util.cmo compiler/util/.util.objs/byte/util__Position.cmo compiler/util/.util.objs/byte/util__Environment.cmo)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/abstract_machine/.abstract_machine.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/util/.util.objs/byte -intf-suffix .ml -no-alias-deps -opaque -o compiler/abstract_machine/.abstract_machine.objs/byte/abstract_machine.cmo -c -impl compiler/abstract_machine/abstract_machine.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/course_language/.course_language.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/util/.util.objs/byte -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/byte/course_language__Interpreter.cmi -c -intf compiler/course_language/interpreter.mli)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/abstract_machine/abstract_machine.cma compiler/abstract_machine/.abstract_machine.objs/byte/abstract_machine.cmo)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -o compiler/abstract_machine/.abstract_machine.objs/native/abstract_machine.cmx -c -impl compiler/abstract_machine/abstract_machine.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/course_language/.course_language.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/util/.util.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/byte/course_language__Ast.cmo -c -impl compiler/course_language/ast.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/three_address/three_address.cmxa compiler/three_address/.three_address.objs/native/three_address.cmx)
 $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/course_language/.course_language.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/util/.util.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/byte/course_language__Interpreter.cmo -c -impl compiler/course_language/interpreter.ml)
-> File "compiler/course_language/interpreter.ml", line 130, characters 8-115:
-> 130 |         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
+> File "compiler/course_language/interpreter.ml", line 131, characters 8-115:
+> 131 |         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
 >               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 > Warning 50 [unexpected-docstring]: unattached documentation comment (ignored)
 > File "compiler/course_language/interpreter.ml", lines 83-85, characters 8-44:
@@ -27,20 +58,20 @@ $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28
 > Warning 8 [partial-match]: this pattern-matching is not exhaustive.
 > Here is an example of a case that is not matched:
 > Some (VNone|VFloat _|VBool _|VArray (_, _))
-> File "compiler/course_language/interpreter.ml", line 95, characters 4-5:
-> 95 |   | _ -> failwith "todo interpret_expr"
+> File "compiler/course_language/interpreter.ml", line 96, characters 4-5:
+> 96 |   | _ -> failwith "todo interpret_expr"
 >          ^
 > Warning 11 [redundant-case]: this match case is unused.
-> File "compiler/course_language/interpreter.ml", line 157, characters 6-7:
-> 157 |     | _ -> failwith "todo interpret_inst"
+> File "compiler/course_language/interpreter.ml", line 158, characters 6-7:
+> 158 |     | _ -> failwith "todo interpret_inst"
 >             ^
 > Warning 11 [redundant-case]: this match case is unused.
-> File "compiler/course_language/interpreter.ml", line 166, characters 2-4:
-> 166 |   () (*à compléter*)
+> File "compiler/course_language/interpreter.ml", line 167, characters 2-4:
+> 167 |   () (*à compléter*)
 >         ^^
 > Warning 20 [ignored-extra-argument]: this argument will not be used by the function.
-> File "compiler/course_language/interpreter.ml", line 165, characters 4-5:
-> 165 |   | _ -> failwith "todo interpret_func_decl"  
+> File "compiler/course_language/interpreter.ml", line 166, characters 4-5:
+> 166 |   | _ -> failwith "todo interpret_func_decl"  
 >           ^
 > Warning 11 [redundant-case]: this match case is unused.
 > File "compiler/course_language/interpreter.ml", line 9, characters 4-15:
@@ -55,21 +86,19 @@ $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28
 > 78 |       let name, map_tab =
 >                      ^^^^^^^
 > Warning 27 [unused-var-strict]: unused variable map_tab.
-> File "compiler/course_language/interpreter.ml", line 88, characters 32-33:
-> 88 |       let args = List.map (fun (t,_,v) -> v) args in
->                                      ^
+> File "compiler/course_language/interpreter.ml", line 88, characters 30-31:
+> 88 |     let args = List.map (fun (t, _, v) -> v) args in
+>                                    ^
 > Warning 27 [unused-var-strict]: unused variable t.
-> File "compiler/course_language/interpreter.ml", line 141, characters 32-33:
-> 141 |       let args = List.map (fun (t,_,v) -> v) args in
+> File "compiler/course_language/interpreter.ml", line 142, characters 32-33:
+> 142 |       let args = List.map (fun (t,_,v) -> v) args in
 >                                       ^
 > Warning 27 [unused-var-strict]: unused variable t.
-> File "compiler/course_language/interpreter.ml", line 147, characters 18-22:
-> 147 |     | Print_expr (expr, _) ->
->                         ^^^^
-> Warning 27 [unused-var-strict]: unused variable expr.
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/native/course_language__Ast.cmx -c -impl compiler/course_language/ast.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/course_language/course_language.cma compiler/course_language/.course_language.objs/byte/course_language.cmo compiler/course_language/.course_language.objs/byte/course_language__Ast.cmo compiler/course_language/.course_language.objs/byte/course_language__Interpreter.cmo)
 $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Course_language -o compiler/course_language/.course_language.objs/native/course_language__Interpreter.cmx -c -impl compiler/course_language/interpreter.ml)
-> File "compiler/course_language/interpreter.ml", line 130, characters 8-115:
-> 130 |         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
+> File "compiler/course_language/interpreter.ml", line 131, characters 8-115:
+> 131 |         (** Affectation to an array cell. The first expression is the position and the second the value to affect*)
 >               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 > Warning 50 [unexpected-docstring]: unattached documentation comment (ignored)
 > File "compiler/course_language/interpreter.ml", lines 83-85, characters 8-44:
@@ -79,20 +108,20 @@ $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..
 > Warning 8 [partial-match]: this pattern-matching is not exhaustive.
 > Here is an example of a case that is not matched:
 > Some (VNone|VFloat _|VBool _|VArray (_, _))
-> File "compiler/course_language/interpreter.ml", line 95, characters 4-5:
-> 95 |   | _ -> failwith "todo interpret_expr"
+> File "compiler/course_language/interpreter.ml", line 96, characters 4-5:
+> 96 |   | _ -> failwith "todo interpret_expr"
 >          ^
 > Warning 11 [redundant-case]: this match case is unused.
-> File "compiler/course_language/interpreter.ml", line 157, characters 6-7:
-> 157 |     | _ -> failwith "todo interpret_inst"
+> File "compiler/course_language/interpreter.ml", line 158, characters 6-7:
+> 158 |     | _ -> failwith "todo interpret_inst"
 >             ^
 > Warning 11 [redundant-case]: this match case is unused.
-> File "compiler/course_language/interpreter.ml", line 166, characters 2-4:
-> 166 |   () (*à compléter*)
+> File "compiler/course_language/interpreter.ml", line 167, characters 2-4:
+> 167 |   () (*à compléter*)
 >         ^^
 > Warning 20 [ignored-extra-argument]: this argument will not be used by the function.
-> File "compiler/course_language/interpreter.ml", line 165, characters 4-5:
-> 165 |   | _ -> failwith "todo interpret_func_decl"  
+> File "compiler/course_language/interpreter.ml", line 166, characters 4-5:
+> 166 |   | _ -> failwith "todo interpret_func_decl"  
 >           ^
 > Warning 11 [redundant-case]: this match case is unused.
 > File "compiler/course_language/interpreter.ml", line 9, characters 4-15:
@@ -107,15 +136,28 @@ $ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..
 > 78 |       let name, map_tab =
 >                      ^^^^^^^
 > Warning 27 [unused-var-strict]: unused variable map_tab.
-> File "compiler/course_language/interpreter.ml", line 88, characters 32-33:
-> 88 |       let args = List.map (fun (t,_,v) -> v) args in
->                                      ^
+> File "compiler/course_language/interpreter.ml", line 88, characters 30-31:
+> 88 |     let args = List.map (fun (t, _, v) -> v) args in
+>                                    ^
 > Warning 27 [unused-var-strict]: unused variable t.
-> File "compiler/course_language/interpreter.ml", line 141, characters 32-33:
-> 141 |       let args = List.map (fun (t,_,v) -> v) args in
+> File "compiler/course_language/interpreter.ml", line 142, characters 32-33:
+> 142 |       let args = List.map (fun (t,_,v) -> v) args in
 >                                       ^
 > Warning 27 [unused-var-strict]: unused variable t.
-> File "compiler/course_language/interpreter.ml", line 147, characters 18-22:
-> 147 |     | Print_expr (expr, _) ->
->                         ^^^^
-> Warning 27 [unused-var-strict]: unused variable expr.
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -shared -linkall -I compiler/three_address -o compiler/three_address/three_address.cmxs compiler/three_address/three_address.cmxa)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/examples/.examples.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/course_language/.course_language.objs/byte -I compiler/util/.util.objs/byte -no-alias-deps -opaque -open Examples__ -o compiler/examples/.examples.objs/byte/examples__Examples_generated.cmo -c -impl compiler/examples/examples_generated.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/util/util.cmxa compiler/util/.util.objs/native/util.cmx compiler/util/.util.objs/native/util__Position.cmx compiler/util/.util.objs/native/util__Environment.cmx)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/examples/.examples.objs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/course_language/.course_language.objs/byte -I compiler/util/.util.objs/byte -no-alias-deps -opaque -open Examples__ -o compiler/examples/.examples.objs/byte/examples.cmo -c -impl compiler/examples/examples.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/abstract_machine/abstract_machine.cmxa compiler/abstract_machine/.abstract_machine.objs/native/abstract_machine.cmx)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -shared -linkall -I compiler/util -o compiler/util/util.cmxs compiler/util/util.cmxa)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/examples/examples.cma compiler/examples/.examples.objs/byte/examples__.cmo compiler/examples/.examples.objs/byte/examples__Examples_generated.cmo compiler/examples/.examples.objs/byte/examples.cmo)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -bin-annot -I compiler/bin_ast_interpreter/.main.eobjs/byte -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/course_language/.course_language.objs/byte -I compiler/examples/.examples.objs/byte -I compiler/util/.util.objs/byte -no-alias-deps -opaque -o compiler/bin_ast_interpreter/.main.eobjs/byte/dune__exe__Main.cmo -c -impl compiler/bin_ast_interpreter/main.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -shared -linkall -I compiler/abstract_machine -o compiler/abstract_machine/abstract_machine.cmxs compiler/abstract_machine/abstract_machine.cmxa)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/examples/.examples.objs/byte -I compiler/examples/.examples.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Examples__ -o compiler/examples/.examples.objs/native/examples.cmx -c -impl compiler/examples/examples.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/bin_ast_interpreter/.main.eobjs/byte -I compiler/bin_ast_interpreter/.main.eobjs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -I compiler/examples/.examples.objs/byte -I compiler/examples/.examples.objs/native -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -o compiler/bin_ast_interpreter/.main.eobjs/native/dune__exe__Main.cmx -c -impl compiler/bin_ast_interpreter/main.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/course_language/course_language.cmxa compiler/course_language/.course_language.objs/native/course_language.cmx compiler/course_language/.course_language.objs/native/course_language__Ast.cmx compiler/course_language/.course_language.objs/native/course_language__Interpreter.cmx)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -shared -linkall -I compiler/course_language -o compiler/course_language/course_language.cmxs compiler/course_language/course_language.cmxa)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -I compiler/examples/.examples.objs/byte -I compiler/examples/.examples.objs/native -I /home/ousmane/.opam/4.14.0/lib/menhirLib -I compiler/abstract_machine/.abstract_machine.objs/byte -I compiler/abstract_machine/.abstract_machine.objs/native -I compiler/course_language/.course_language.objs/byte -I compiler/course_language/.course_language.objs/native -I compiler/util/.util.objs/byte -I compiler/util/.util.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Examples__ -o compiler/examples/.examples.objs/native/examples__Examples_generated.cmx -c -impl compiler/examples/examples_generated.ml)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -a -o compiler/examples/examples.cmxa compiler/examples/.examples.objs/native/examples__.cmx compiler/examples/.examples.objs/native/examples__Examples_generated.cmx compiler/examples/.examples.objs/native/examples.cmx)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -shared -linkall -I compiler/examples -o compiler/examples/examples.cmxs compiler/examples/examples.cmxa)
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -A -g -o compiler/bin_ast_interpreter/main.exe /home/ousmane/.opam/4.14.0/lib/menhirLib/menhirLib.cmxa compiler/util/util.cmxa compiler/abstract_machine/abstract_machine.cmxa compiler/course_language/course_language.cmxa compiler/examples/examples.cmxa compiler/bin_ast_interpreter/.main.eobjs/native/dune__exe__Main.cmx)
