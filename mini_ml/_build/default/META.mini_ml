@@ -1,0 +1,21 @@
+package "__private__" (
+  directory = "__private__"
+  package "language" (
+    directory = "language"
+    description = ""
+    requires = "menhirLib mini_ml.__private__.util"
+    archive(byte) = "language.cma"
+    archive(native) = "language.cmxa"
+    plugin(byte) = "language.cma"
+    plugin(native) = "language.cmxs"
+  )
+  package "util" (
+    directory = "util"
+    description = ""
+    requires = "menhirLib"
+    archive(byte) = "util.cma"
+    archive(native) = "util.cmxa"
+    plugin(byte) = "util.cma"
+    plugin(native) = "util.cmxs"
+  )
+)

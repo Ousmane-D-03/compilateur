@@ -1,0 +1,677 @@
+
+** Conflict (reduce/reduce) in state 119.
+** Tokens involved: SEMICOLON R_SQ
+** The following explanations concentrate on token SEMICOLON.
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ L_SQ L_PAR expr R_PAR
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   L_SQ loption(separated_nonempty_list(SEMICOLON,atomic_expr)) R_SQ 
+                        separated_nonempty_list(SEMICOLON,atomic_expr) 
+                        atomic_expr SEMICOLON separated_nonempty_list(SEMICOLON,atomic_expr) // lookahead token appears
+                        (?)
+
+** In state 119, looking ahead at SEMICOLON, reducing production
+** atomic_expr -> L_PAR expr R_PAR
+** is permitted because of the following sub-derivation:
+
+L_PAR expr R_PAR . 
+
+** In state 119, looking ahead at SEMICOLON, reducing production
+** simple_expr -> L_PAR expr R_PAR
+** is permitted because of the following sub-derivation:
+
+simple_expr // lookahead token is inherited
+L_PAR expr R_PAR . 
+
+** Conflict (shift/reduce) in state 117.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ SUB expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 117, looking ahead at APPEND, reducing production
+** expr -> SUB expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+SUB expr . 
+
+** In state 117, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+SUB expr 
+    expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 94.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ LET ID EQ expr IN expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 94, looking ahead at APPEND, reducing production
+** expr -> LET ID EQ expr IN expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+LET ID EQ expr IN expr . 
+
+** In state 94, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+LET ID EQ expr IN expr 
+                  expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 89.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ LET REC ID EQ expr IN expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 89, looking ahead at APPEND, reducing production
+** expr -> LET REC ID EQ expr IN expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+LET REC ID EQ expr IN expr . 
+
+** In state 89, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+LET REC ID EQ expr IN expr 
+                      expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 86.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ IF expr THEN expr ELSE expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 86, looking ahead at APPEND, reducing production
+** expr -> IF expr THEN expr ELSE expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+IF expr THEN expr ELSE expr . 
+
+** In state 86, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+IF expr THEN expr ELSE expr 
+                       expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 81.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr AND expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 81, looking ahead at APPEND, reducing production
+** expr -> expr AND expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr AND expr . 
+
+** In state 81, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr AND expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 79.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr EQ expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 79, looking ahead at APPEND, reducing production
+** expr -> expr EQ expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr EQ expr . 
+
+** In state 79, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr EQ expr 
+        expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 77.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr GEQ expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 77, looking ahead at APPEND, reducing production
+** expr -> expr GEQ expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr GEQ expr . 
+
+** In state 77, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr GEQ expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 75.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr GT expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 75, looking ahead at APPEND, reducing production
+** expr -> expr GT expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr GT expr . 
+
+** In state 75, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr GT expr 
+        expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 73.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr LEQ expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 73, looking ahead at APPEND, reducing production
+** expr -> expr LEQ expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr LEQ expr . 
+
+** In state 73, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr LEQ expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 71.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr LT expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 71, looking ahead at APPEND, reducing production
+** expr -> expr LT expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr LT expr . 
+
+** In state 71, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr LT expr 
+        expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 69.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr ADD expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 69, looking ahead at APPEND, reducing production
+** expr -> expr ADD expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr ADD expr . 
+
+** In state 69, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr ADD expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 67.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr CAT expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 67, looking ahead at APPEND, reducing production
+** expr -> expr CAT expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr CAT expr . 
+
+** In state 67, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr CAT expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 65.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr CONCAT expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 65, looking ahead at APPEND, reducing production
+** expr -> expr CONCAT expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr CONCAT expr . 
+
+** In state 65, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr CONCAT expr 
+            expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 63.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr DIV expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 63, looking ahead at APPEND, reducing production
+** expr -> expr DIV expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr DIV expr . 
+
+** In state 63, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr DIV expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 59.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr MOD expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 59, looking ahead at APPEND, reducing production
+** expr -> expr MOD expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr MOD expr . 
+
+** In state 59, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr MOD expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 57.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr NEQ expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 57, looking ahead at APPEND, reducing production
+** expr -> expr NEQ expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr NEQ expr . 
+
+** In state 57, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr NEQ expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 55.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr OR expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 55, looking ahead at APPEND, reducing production
+** expr -> expr OR expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr OR expr . 
+
+** In state 55, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr OR expr 
+        expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 53.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr SEMICOLON expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 53, looking ahead at APPEND, reducing production
+** expr -> expr SEMICOLON expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr SEMICOLON expr . 
+
+** In state 53, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr SEMICOLON expr 
+               expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 51.
+** Tokens involved: SUB SEMICOLON OR NEQ MUL MOD LT LEQ GT GEQ EQ DIV CONCAT CAT APPEND AND ADD
+** The following explanations concentrate on token SUB.
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr APPEND expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 51, looking ahead at SUB, shifting is permitted
+** because of the following sub-derivation:
+
+expr APPEND expr 
+            expr . SUB expr 
+
+** In state 51, looking ahead at SUB, reducing production
+** expr -> expr APPEND expr
+** is permitted because of the following sub-derivation:
+
+expr SUB expr // lookahead token appears
+expr APPEND expr . 
+
+** Conflict (shift/reduce) in state 49.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr MUL expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 49, looking ahead at APPEND, reducing production
+** expr -> expr MUL expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr MUL expr . 
+
+** In state 49, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr MUL expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 47.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ expr SUB expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 47, looking ahead at APPEND, reducing production
+** expr -> expr SUB expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+expr SUB expr . 
+
+** In state 47, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+expr SUB expr 
+         expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 45.
+** Token involved: APPEND
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ FUN ID ARROW expr
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 45, looking ahead at APPEND, reducing production
+** expr -> FUN ID ARROW expr
+** is permitted because of the following sub-derivation:
+
+expr APPEND expr // lookahead token appears
+FUN ID ARROW expr . 
+
+** In state 45, looking ahead at APPEND, shifting is permitted
+** because of the following sub-derivation:
+
+FUN ID ARROW expr 
+             expr . APPEND expr 
+
+** Conflict (shift/reduce) in state 14.
+** Token involved: R_SQ
+** This state is reached from main after reading:
+
+LET ID list(ID) EQ L_SQ
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+main 
+req_list EOF 
+req req_list 
+LET ID list(ID) EQ expr 
+                   (?)
+
+** In state 14, looking ahead at R_SQ, reducing production
+** loption(separated_nonempty_list(SEMICOLON,atomic_expr)) ->
+** is permitted because of the following sub-derivation:
+
+L_SQ loption(separated_nonempty_list(SEMICOLON,atomic_expr)) R_SQ // lookahead token appears
+     . 
+
+** In state 14, looking ahead at R_SQ, shifting is permitted
+** because of the following sub-derivation:
+
+simple_expr 
+L_SQ . R_SQ 

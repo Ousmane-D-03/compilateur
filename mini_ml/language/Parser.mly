@@ -2,8 +2,19 @@
     open Ast
 %}
 
-%nonassoc IN ELSE ARROW
-%left SEMICOLON
+/* Priorités et associativités */
+%nonassoc IN
+%nonassoc ELSE 
+%nonassoc ARROW
+%right SEMICOLON        /* Déplacé plus haut dans les priorités */
+%left OR              
+%left AND             
+%left EQ NEQ LT GT LEQ GEQ  
+%left CONCAT          
+%right CAT           
+%left ADD SUB        
+%left MUL DIV MOD    
+%nonassoc uminus     
 
 %start <Ast.t> main
 
@@ -17,8 +28,14 @@ req_list:
 | r = req { [r] }
 
 req:
-| LET name = ID EQ e = expr { (false,name,e) }
-| LET REC name = ID EQ e = expr { (true,name,e) }
+| LET name = ID args = ID* EQ e = expr { 
+    (false, name, 
+     List.fold_right (fun arg acc -> Fun(arg, acc, Annotation.create $loc)) args e)
+}
+| LET REC name = ID args = ID* EQ e = expr { 
+    (true, name,
+     List.fold_right (fun arg acc -> Fun(arg, acc, Annotation.create $loc)) args e)
+}
 
 expr:
 | e = simple_expr { e }
@@ -28,6 +45,25 @@ expr:
 | FUN x = ID ARROW e = expr { Fun(x,e,Annotation.create $loc) }
 | e1 = expr SEMICOLON e2 = expr { Ignore(e1,e2,Annotation.create $loc) }
 | e1 = app_expr e2 = simple_expr { App(e1,e2,Annotation.create $loc) } 
+| SUB e = expr %prec uminus { 
+    App(Cst_func(UMin, Annotation.create $loc), e, Annotation.create $loc) 
+}
+| e1 = expr op = binop e2 = expr { 
+    App(App(Cst_func(op, Annotation.create $loc), e1, Annotation.create $loc), 
+        e2, Annotation.create $loc) 
+}
+| L_SQ separated_list(SEMICOLON, atomic_expr) R_SQ { 
+    let list = $2 in
+    List.fold_right 
+      (fun e acc -> App(App(Cst_func(Cat, Annotation.create $loc), e, Annotation.create $loc),
+                       acc, Annotation.create $loc))
+      list (Nil(Annotation.create $loc))
+}
+
+/* Nouvelle règle pour les expressions atomiques dans les listes */
+atomic_expr:
+| e = simple_expr { e }
+| L_PAR e = expr R_PAR { e }
 
 simple_expr:
 | i = INT { Cst_i(i,Annotation.create $loc) }

@@ -1,0 +1,266 @@
+(lang dune 3.18)
+(name mini_ml)
+(sections (lib .) (libexec .) (bin ../../bin) (doc ../../doc/mini_ml))
+(files
+ (lib
+  (META
+   __private__/language/.public_cmi/language.cmi
+   __private__/language/.public_cmi/language.cmt
+   __private__/language/.public_cmi/language__Ast.cmi
+   __private__/language/.public_cmi/language__Ast.cmt
+   __private__/language/.public_cmi/language__Ast.cmti
+   __private__/language/.public_cmi/language__Cmly.cmi
+   __private__/language/.public_cmi/language__Cmly.cmt
+   __private__/language/.public_cmi/language__Interpreter.cmi
+   __private__/language/.public_cmi/language__Interpreter.cmt
+   __private__/language/.public_cmi/language__Interpreter.cmti
+   __private__/language/.public_cmi/language__Lexer.cmi
+   __private__/language/.public_cmi/language__Lexer.cmt
+   __private__/language/.public_cmi/language__Parser.cmi
+   __private__/language/.public_cmi/language__Parser.cmt
+   __private__/language/.public_cmi/language__Parser.cmti
+   __private__/language/.public_cmi/language__Parser_calc.cmi
+   __private__/language/.public_cmi/language__Parser_calc.cmt
+   __private__/language/.public_cmi/language__Parser_calc.cmti
+   __private__/language/.public_cmi/language__Parser_sandbox.cmi
+   __private__/language/.public_cmi/language__Parser_sandbox.cmt
+   __private__/language/.public_cmi/language__Parser_sandbox.cmti
+   __private__/language/.public_cmi/language__Parser_simple.cmi
+   __private__/language/.public_cmi/language__Parser_simple.cmt
+   __private__/language/.public_cmi/language__Parser_simple.cmti
+   __private__/language/.public_cmi/language__Tokens.cmi
+   __private__/language/.public_cmi/language__Tokens.cmt
+   __private__/language/.public_cmi/language__Tokens.cmti
+   __private__/language/.public_cmi/language__Type_system.cmi
+   __private__/language/.public_cmi/language__Type_system.cmt
+   __private__/language/.public_cmi/language__Type_system.cmti
+   __private__/language/.public_cmi/language__Typer.cmi
+   __private__/language/.public_cmi/language__Typer.cmt
+   __private__/language/.public_cmi/language__Typer.cmti
+   __private__/language/.public_cmi/language__Typer_naive.cmi
+   __private__/language/.public_cmi/language__Typer_naive.cmt
+   __private__/language/.public_cmi/language__Typer_naive.cmti
+   __private__/language/.public_cmi/language__Typer_util.cmi
+   __private__/language/.public_cmi/language__Typer_util.cmt
+   __private__/language/.public_cmi/language__Typer_util.cmti
+   __private__/language/Cmly.ml
+   __private__/language/Lexer.ml
+   __private__/language/Parser.ml
+   __private__/language/Parser.mli
+   __private__/language/Parser_calc.ml
+   __private__/language/Parser_calc.mli
+   __private__/language/Parser_sandbox.ml
+   __private__/language/Parser_sandbox.mli
+   __private__/language/Parser_simple.ml
+   __private__/language/Parser_simple.mli
+   __private__/language/Tokens.ml
+   __private__/language/Tokens.mli
+   __private__/language/ast.ml
+   __private__/language/ast.mli
+   __private__/language/interpreter.ml
+   __private__/language/interpreter.mli
+   __private__/language/language.a
+   __private__/language/language.cma
+   __private__/language/language.cmx
+   __private__/language/language.cmxa
+   __private__/language/language.ml
+   __private__/language/language__Ast.cmx
+   __private__/language/language__Cmly.cmx
+   __private__/language/language__Interpreter.cmx
+   __private__/language/language__Lexer.cmx
+   __private__/language/language__Parser.cmx
+   __private__/language/language__Parser_calc.cmx
+   __private__/language/language__Parser_sandbox.cmx
+   __private__/language/language__Parser_simple.cmx
+   __private__/language/language__Tokens.cmx
+   __private__/language/language__Type_system.cmx
+   __private__/language/language__Typer.cmx
+   __private__/language/language__Typer_naive.cmx
+   __private__/language/language__Typer_util.cmx
+   __private__/language/type_system.ml
+   __private__/language/type_system.mli
+   __private__/language/typer.ml
+   __private__/language/typer.mli
+   __private__/language/typer_naive.ml
+   __private__/language/typer_naive.mli
+   __private__/language/typer_util.ml
+   __private__/language/typer_util.mli
+   __private__/util/.public_cmi/util.cmi
+   __private__/util/.public_cmi/util.cmt
+   __private__/util/.public_cmi/util__Environment.cmi
+   __private__/util/.public_cmi/util__Environment.cmt
+   __private__/util/.public_cmi/util__Environment.cmti
+   __private__/util/.public_cmi/util__Position.cmi
+   __private__/util/.public_cmi/util__Position.cmt
+   __private__/util/.public_cmi/util__Position.cmti
+   __private__/util/environment.ml
+   __private__/util/environment.mli
+   __private__/util/position.ml
+   __private__/util/position.mli
+   __private__/util/util.a
+   __private__/util/util.cma
+   __private__/util/util.cmx
+   __private__/util/util.cmxa
+   __private__/util/util.ml
+   __private__/util/util__Environment.cmx
+   __private__/util/util__Position.cmx
+   dune-package
+   opam))
+ (libexec (__private__/language/language.cmxs __private__/util/util.cmxs))
+ (bin (interpreter visualiser))
+ (doc (odoc-pages/index.mld)))
+(library
+ (name mini_ml.__private__.language)
+ (kind normal)
+ (archives
+  (byte __private__/language/language.cma)
+  (native __private__/language/language.cmxa))
+ (plugins
+  (byte __private__/language/language.cma)
+  (native __private__/language/language.cmxs))
+ (native_archives __private__/language/language.a)
+ (requires mini_ml.__private__.util menhirLib)
+ (main_module_name Language)
+ (modes byte native)
+ (obj_dir
+  (public_cmi_ocaml_dir .public_cmi)
+  (public_cmi_melange_dir melange/.public_cmi_melange))
+ (modules
+  (wrapped
+   (group
+    (alias
+     (obj_name language)
+     (visibility public)
+     (kind alias)
+     (source
+      (path Language)
+      (impl (path __private__/language/language.ml-gen))))
+    (name Language)
+    (modules
+     (module
+      (obj_name language__Ast)
+      (visibility public)
+      (source
+       (path Ast)
+       (intf (path __private__/language/ast.mli))
+       (impl (path __private__/language/ast.ml))))
+     (module
+      (obj_name language__Cmly)
+      (visibility public)
+      (source (path Cmly) (impl (path __private__/language/Cmly.ml))))
+     (module
+      (obj_name language__Interpreter)
+      (visibility public)
+      (source
+       (path Interpreter)
+       (intf (path __private__/language/interpreter.mli))
+       (impl (path __private__/language/interpreter.ml))))
+     (module
+      (obj_name language__Lexer)
+      (visibility public)
+      (source (path Lexer) (impl (path __private__/language/Lexer.ml))))
+     (module
+      (obj_name language__Parser)
+      (visibility public)
+      (source
+       (path Parser)
+       (intf (path __private__/language/Parser.mli))
+       (impl (path __private__/language/Parser.ml))))
+     (module
+      (obj_name language__Parser_calc)
+      (visibility public)
+      (source
+       (path Parser_calc)
+       (intf (path __private__/language/Parser_calc.mli))
+       (impl (path __private__/language/Parser_calc.ml))))
+     (module
+      (obj_name language__Parser_sandbox)
+      (visibility public)
+      (source
+       (path Parser_sandbox)
+       (intf (path __private__/language/Parser_sandbox.mli))
+       (impl (path __private__/language/Parser_sandbox.ml))))
+     (module
+      (obj_name language__Parser_simple)
+      (visibility public)
+      (source
+       (path Parser_simple)
+       (intf (path __private__/language/Parser_simple.mli))
+       (impl (path __private__/language/Parser_simple.ml))))
+     (module
+      (obj_name language__Tokens)
+      (visibility public)
+      (source
+       (path Tokens)
+       (intf (path __private__/language/Tokens.mli))
+       (impl (path __private__/language/Tokens.ml))))
+     (module
+      (obj_name language__Type_system)
+      (visibility public)
+      (source
+       (path Type_system)
+       (intf (path __private__/language/type_system.mli))
+       (impl (path __private__/language/type_system.ml))))
+     (module
+      (obj_name language__Typer)
+      (visibility public)
+      (source
+       (path Typer)
+       (intf (path __private__/language/typer.mli))
+       (impl (path __private__/language/typer.ml))))
+     (module
+      (obj_name language__Typer_naive)
+      (visibility public)
+      (source
+       (path Typer_naive)
+       (intf (path __private__/language/typer_naive.mli))
+       (impl (path __private__/language/typer_naive.ml))))
+     (module
+      (obj_name language__Typer_util)
+      (visibility public)
+      (source
+       (path Typer_util)
+       (intf (path __private__/language/typer_util.mli))
+       (impl (path __private__/language/typer_util.ml))))))
+   (wrapped true))))
+(library
+ (name mini_ml.__private__.util)
+ (kind normal)
+ (archives
+  (byte __private__/util/util.cma)
+  (native __private__/util/util.cmxa))
+ (plugins
+  (byte __private__/util/util.cma)
+  (native __private__/util/util.cmxs))
+ (native_archives __private__/util/util.a)
+ (requires menhirLib)
+ (main_module_name Util)
+ (modes byte native)
+ (obj_dir
+  (public_cmi_ocaml_dir .public_cmi)
+  (public_cmi_melange_dir melange/.public_cmi_melange))
+ (modules
+  (wrapped
+   (group
+    (alias
+     (obj_name util)
+     (visibility public)
+     (kind alias)
+     (source (path Util) (impl (path __private__/util/util.ml-gen))))
+    (name Util)
+    (modules
+     (module
+      (obj_name util__Environment)
+      (visibility public)
+      (source
+       (path Environment)
+       (intf (path __private__/util/environment.mli))
+       (impl (path __private__/util/environment.ml))))
+     (module
+      (obj_name util__Position)
+      (visibility public)
+      (source
+       (path Position)
+       (intf (path __private__/util/position.mli))
+       (impl (path __private__/util/position.ml))))))
+   (wrapped true))))

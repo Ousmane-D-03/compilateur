@@ -1,0 +1,41 @@
+# dune build @doc
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /home/ousmane/.cache/dune/db
+# Workspace root: /home/ousmane/Documents/University/compilateur/mini_ml
+# Auto-detected concurrency: 12
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /home/ousmane/.opam/4.14.0/bin/ocamlc.opt -config > /tmp/dune_85ba8f_output
+$ (cd _build/default && /home/ousmane/.opam/4.14.0/bin/odoc support-files -o _doc/_html/odoc.support)
+$ (cd _build/default/_doc/_odoc/pkg/mini_ml && /home/ousmane/.opam/4.14.0/bin/odoc compile --pkg mini_ml -o page-index.odoc ../../../../index.mld)
+$ (cd _build/default/util/.util.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml --pkg mini_ml -o util.odoc util.cmt)
+$ (cd _build/default/util/.util.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml --pkg mini_ml -o util__Position.odoc util__Position.cmti)
+$ (cd _build/default/util/.util.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml --pkg mini_ml -o util__Environment.odoc util__Environment.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language.odoc language.cmt)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Cmly.odoc language__Cmly.cmt)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Ast.odoc language__Ast.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Tokens.odoc language__Tokens.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Interpreter.odoc language__Interpreter.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Type_system.odoc language__Type_system.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Typer_util.odoc language__Typer_util.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Lexer.odoc language__Lexer.cmt)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Parser.odoc language__Parser.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Parser_calc.odoc language__Parser_calc.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Parser_simple.odoc language__Parser_simple.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Parser_sandbox.odoc language__Parser_sandbox.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Typer_naive.odoc language__Typer_naive.cmti)
+$ (cd _build/default/language/.language.objs/byte && /home/ousmane/.opam/4.14.0/bin/odoc compile -I . -I ../../../_doc/_odoc/pkg/mini_ml -I ../../../util/.util.objs/byte --pkg mini_ml -o language__Typer.odoc language__Typer.cmti)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc link -I ../_odoc/pkg/mini_ml -I ../../language/.language.objs/byte -I ../../util/.util.objs/byte -o ../_odocls/mini_ml/util.odocl ../../util/.util.objs/byte/util.odoc)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc link -I ../_odoc/pkg/mini_ml -I ../../language/.language.objs/byte -I ../../util/.util.objs/byte -o ../_odocls/mini_ml/page-index.odocl ../_odoc/pkg/mini_ml/page-index.odoc)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc link -I ../_odoc/pkg/mini_ml -I ../../language/.language.objs/byte -I ../../util/.util.objs/byte -o ../_odocls/mini_ml/language.odocl ../../language/.language.objs/byte/language.odoc)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc html-generate -o . --support-uri odoc.support --theme-uri odoc.support ../_odocls/mini_ml/page-index.odocl)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc html-generate -o . --support-uri odoc.support --theme-uri odoc.support ../_odocls/mini_ml/util.odocl)
+$ (cd _build/default/_doc/_html && /home/ousmane/.opam/4.14.0/bin/odoc html-generate -o . --support-uri odoc.support --theme-uri odoc.support ../_odocls/mini_ml/language.odocl)
