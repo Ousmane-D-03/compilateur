@@ -2,6 +2,18 @@ open Type_system
 open Ast
 open Typer_util
 
+(* Extracts type variables from a type *)
+let rec get_type_vars t =
+  match t with
+  | TUniv v -> [v]
+  | TFunc(vars, t1, t2) -> vars @ (get_type_vars t1) @ (get_type_vars t2)
+  | _ -> []
+
+let type_generics count_before t =
+  (* Define the type_generics function logic here *)
+  (* Placeholder implementation: Replace with actual logic *)
+  []
+
 let rec type_expr (counter : Counter.t) (env : type_lang Util.Environment.t)
     (expr : expr) =
   match expr with
@@ -28,12 +40,9 @@ let rec type_expr (counter : Counter.t) (env : type_lang Util.Environment.t)
       let (internal, external_) = split_constraint_by_floor count_before c1 in
       let subst = solve_constraints internal in
       let t1' = apply_subst_in_type subst t1 in
-      (* Création d'une expression temporaire pour la généralisation *)
-      let temp_ann = Annotation.create Lexing.(dummy_pos, dummy_pos) in
-      let () = Annotation.set_type temp_ann t1' in
-      let temp_expr = Unit temp_ann in
-      let t1'' = generalize_type_expr count_before temp_expr in
-      Util.Environment.add env x t1'';
+      let vars = get_type_vars t1' in
+      let generalized = TFunc(vars, t1', t1') in
+      Util.Environment.add env x generalized;
       let (t2, c2) = type_expr counter env e2 in
       Util.Environment.remove env x;
       (t2, external_ @ c2)

@@ -11,7 +11,8 @@
 %left AND             
 %left EQ NEQ LT GT LEQ GEQ  
 %left CONCAT          
-%right CAT           
+%left APPEND          /* @ */
+%right CAT           /* :: */
 %left ADD SUB        
 %left MUL DIV MOD    
 %nonassoc uminus     
@@ -51,6 +52,14 @@ expr:
 | e1 = expr op = binop e2 = expr { 
     App(App(Cst_func(op, Annotation.create $loc), e1, Annotation.create $loc), 
         e2, Annotation.create $loc) 
+}
+| e1 = expr APPEND e2 = expr {
+    App(App(Cst_func(Append, Annotation.create $loc), e1, Annotation.create $loc),
+        e2, Annotation.create $loc)
+}
+| e1 = atomic_expr CAT e2 = expr {  /* Modification pour :: */
+    App(App(Cst_func(Cat, Annotation.create $loc), e1, Annotation.create $loc),
+        e2, Annotation.create $loc)
 }
 | L_SQ separated_list(SEMICOLON, atomic_expr) R_SQ { 
     let list = $2 in

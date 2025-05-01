@@ -1,5 +1,3 @@
-
-
 {
     open Tokens
     exception Error of string
@@ -9,9 +7,9 @@ let digit = ['0'-'9']
 let alphanum = ['a'-'z' 'A'-'Z' '0'-'9' '\'' '_']
 
 rule token = parse
-    | "(*"              {commentary lexbuf}
-    | [' ' '\t' '\r']   {token lexbuf}
-    | '\n'              { Lexing.new_line lexbuf ; token lexbuf }
+    | "(*"              { commentary lexbuf }
+    | [' ' '\t' '\r']   { token lexbuf }
+    | '\n'              { Lexing.new_line lexbuf; token lexbuf }
     | "if"              { IF }
     | "then"            { THEN }
     | "else"            { ELSE }
