@@ -11,14 +11,17 @@ let rec type_expr counter env = function
       (t, [])
       
   | App(f, arg, ann) ->
-      (* Instancier les types avant de générer les contraintes *)
       let (f_type, f_constraints) = type_expr counter env f in
       let (arg_type, arg_constraints) = type_expr counter env arg in
-      let f_type = instantiate counter f_type in
-      let arg_type = instantiate counter arg_type in
       let ret_type = TUniv(Counter.get_fresh counter) in
+      let extra_constraints = match f with
+        | App(Cst_func((Add|Sub|Mul|Div|Mod), _), e1, _) -> 
+            [(arg_type, TInt); (ret_type, TInt)]
+        | Cst_func((Add|Sub|Mul|Div|Mod), _) ->
+            [(arg_type, TInt)]
+        | _ -> [] in
       let constraints = (f_type, TFunc([], arg_type, ret_type)) :: 
-                       (f_constraints @ arg_constraints) in
+                       (extra_constraints @ f_constraints @ arg_constraints) in
       Annotation.set_type ann ret_type;
       (ret_type, constraints)
 
@@ -32,7 +35,20 @@ let rec type_expr counter env = function
           let t_var = TUniv(Counter.get_fresh counter) in
           Util.Environment.add e1_env name t_var;
           let (t, c) = type_expr counter e1_env e1 in
-          (t, (t_var, t) :: c)
+          let extra_constraints = match e1 with
+            | Fun(_, body, _) ->
+                let rec collect_arith_constraints = function
+                  | App(App(Cst_func((Add|Sub|Mul|Div|Mod), _), e1, _), e2, _) -> 
+                      [(t_var, TInt)]
+                  | App(Cst_func((Eq), _), e1, _) -> 
+                      [(t_var, TInt)]
+                  | App(e1, e2, _) -> 
+                      collect_arith_constraints e1 @ collect_arith_constraints e2
+                  | _ -> []
+                in
+                collect_arith_constraints body @ c
+            | _ -> c in
+          (t, extra_constraints)
         else type_expr counter e1_env e1 in
       
       (* Résoudre les contraintes internes et généraliser *)
