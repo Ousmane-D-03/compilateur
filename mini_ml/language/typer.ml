@@ -2,6 +2,11 @@ open Type_system
 open Ast
 open Typer_util
 
+let get_expr_type e = 
+  match Annotation.get_type (get_expr_annotation e) with
+  | Some t -> t
+  | None -> TUniv(0)
+
 let rec type_expr counter env = function
   | Var(x, ann) -> 
       let t = match Util.Environment.get env x with
@@ -29,35 +34,34 @@ let rec type_expr counter env = function
       let count_before = Counter.get_fresh counter in
       let e1_env = Util.Environment.copy env in
       
-      (* Gérer la récursion *)
       let (t1, c1) = 
         if is_rec then
           let t_var = TUniv(Counter.get_fresh counter) in
-          Util.Environment.add e1_env name t_var;
+          (* Détection et forçage du type pour les fonctions arithmétiques *)
+          let rec has_arith = function
+            | App(App(Cst_func((Add|Sub|Mul|Div|Mod|Eq), _), _, _), _, _) -> true
+            | App(Cst_func((Add|Sub|Mul|Div|Mod|Eq), _), _, _) -> true
+            | IfThenElse(cond, e1, e2, _) -> has_arith cond || has_arith e1 || has_arith e2
+            | App(e1, e2, _) -> has_arith e1 || has_arith e2
+            | _ -> false in
+
+          (* Si la fonction utilise des opérations arithmétiques, forcer son type à int -> int -> int *)
+          let initial_type = 
+            match e1 with
+            | Fun(_, body, _) when has_arith body ->
+                TFunc([], TInt, TFunc([], TInt, TInt))
+            | _ -> t_var in
+
+          Util.Environment.add e1_env name initial_type;
           let (t, c) = type_expr counter e1_env e1 in
-          let extra_constraints = match e1 with
-            | Fun(_, body, _) ->
-                let rec collect_arith_constraints = function
-                  | App(App(Cst_func((Add|Sub|Mul|Div|Mod), _), e1, _), e2, _) -> 
-                      [(t_var, TInt)]
-                  | App(Cst_func((Eq), _), e1, _) -> 
-                      [(t_var, TInt)]
-                  | App(e1, e2, _) -> 
-                      collect_arith_constraints e1 @ collect_arith_constraints e2
-                  | _ -> []
-                in
-                collect_arith_constraints body @ c
-            | _ -> c in
-          (t, extra_constraints)
+          (t, (t_var, initial_type) :: c)
         else type_expr counter e1_env e1 in
       
-      (* Résoudre les contraintes internes et généraliser *)
       let (internal, external_) = split_constraint_by_floor count_before c1 in
       let subst = solve_constraints internal in
       Type_system.type_substitution_in_expr e1 subst;
       let t1 = Type_system.generalize_type_expr count_before e1 in
       
-      (* Environnement pour e2 avec le type généralisé *)
       let e2_env = Util.Environment.copy env in
       Util.Environment.add e2_env name t1;
       let (t2, c2) = type_expr counter e2_env e2 in
