@@ -1,1 +1,1 @@
-language/typer_util.ml: Ast List Type_system Util
+language/typer_util.ml: Ast Type_system Util
