@@ -1,6 +1,5 @@
 open Ast
 open Typer_util
-open Type_system
 
 let rec type_expr (counter : Counter.t) (env : type_lang Util.Environment.t) (expr : expr) =
   match expr with

@@ -1,4 +1,3 @@
-open Type_system
 open Ast
 
 exception Constraint_error of type_lang * type_lang
@@ -56,9 +55,9 @@ let rec solve_constraints = function
           let rest' = List.map (fun (t1, t2) ->
             Type_system.substitute_constraint n t (t1, t2)) rest in
           subst @ solve_constraints rest'
-      | (TList(g1, t1), TList(g2, t2)) ->
+      | (TList(_, t1), TList(_, t2)) ->
           solve_constraints ((t1, t2) :: rest)
-      | (TFunc(g1, a1, r1), TFunc(g2, a2, r2)) ->
+      | (TFunc(_, a1, r1), TFunc(_, a2, r2)) ->
           solve_constraints ((a1, a2) :: (r1, r2) :: rest)
       | (t1, t2) when t1 = t2 -> solve_constraints rest
       | _ -> raise (Constraint_error(t1, t2))
