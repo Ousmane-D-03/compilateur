@@ -149,14 +149,20 @@ let rec occurs_check n = function
 let rec unify t1 t2 =
   match (t1, t2) with
   | (t1, t2) when t1 = t2 -> []
-  | (TUniv n, t) when not (occurs_check n t) -> [(n, t)]
-  | (t, TUniv n) when not (occurs_check n t) -> [(n, t)]
-  | (TFunc(_, arg1, res1), TFunc(_, arg2, res2)) ->
+  | (TUniv n1, TUniv n2) -> 
+      [(min n1 n2, TUniv(max n1 n2))]
+  | (TUniv n, t) | (t, TUniv n) ->
+      if occurs_check n t then
+        failwith "Occurs check failed"
+      else [(n, t)]
+  | (TFunc(g1, arg1, res1), TFunc(g2, arg2, res2)) ->
+      (* Amélioration de l'unification des fonctions *)
       let s1 = unify arg1 arg2 in
       let res1' = apply_subst_in_type s1 res1 in
       let res2' = apply_subst_in_type s1 res2 in
       let s2 = unify res1' res2' in
-      s1 @ s2
-  | (TList(_, t1), TList(_, t2)) ->
-      unify t1 t2
-  | _ -> failwith "Unification failed"
+      let merged = s1 @ s2 in
+      List.sort_uniq (fun (n1,_) (n2,_) -> compare n1 n2) merged
+  | (TList(_, t1), TList(_, t2)) -> unify t1 t2
+  | (TInt, TInt) | (TBool, TBool) | (TString, TString) | (TUnit, TUnit) -> []
+  | _ -> failwith "Type mismatch"

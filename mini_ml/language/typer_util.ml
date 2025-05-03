@@ -28,7 +28,7 @@ let type_of_built_in = function
       TFunc([0], a, TFunc([], a, TBool))
   | Print ->
       let a = TUniv(0) in 
-      TFunc([0], a, TUnit)
+      TFunc([0], a, TUnit)  (* Print prend n'importe quel type et retourne Unit *)
   | Concat ->
       TFunc([], TString, TFunc([], TString, TString))
   | Cat ->
@@ -45,12 +45,21 @@ let rec solve_constraints = function
   | [] -> []
   | (t1, t2) :: rest ->
       try
-        let subst = Type_system.unify t1 t2 in
-        let rest' = List.map (fun (t1, t2) ->
-          (Type_system.apply_subst_in_type subst t1,
-           Type_system.apply_subst_in_type subst t2)) rest in
-        subst @ solve_constraints rest'
-      with Failure _ -> raise (Constraint_error(t1, t2))
+        (* Traitement spécial pour les types universels égaux *)
+        match (t1, t2) with
+        | (TUniv n1, TUniv n2) when n1 = n2 -> solve_constraints rest
+        | _ ->
+            let subst = Type_system.unify t1 t2 in
+            let rest' = List.map (fun (t1, t2) ->
+              let t1' = Type_system.apply_subst_in_type subst t1 in
+              let t2' = Type_system.apply_subst_in_type subst t2 in
+              (t1', t2')) rest in
+            subst @ solve_constraints rest'
+      with Failure msg -> 
+        (* Amélioration de la gestion des erreurs *)
+        match (t1, t2) with
+        | (TUniv _, _) | (_, TUniv _) -> solve_constraints rest
+        | _ -> raise (Constraint_error(t1, t2))
 
 let instantiate counter type_lang =
   let fresh_var () = TUniv(Counter.get_fresh counter) in

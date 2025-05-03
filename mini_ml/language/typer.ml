@@ -15,10 +15,8 @@ let rec type_expr counter env = function
       let (arg_type, arg_constraints) = type_expr counter env arg in
       let ret_type = TUniv(Counter.get_fresh counter) in
       let extra_constraints = match f with
-        | App(Cst_func((Add|Sub|Mul|Div|Mod), _), _, _) -> 
-            [(arg_type, TInt); (ret_type, TInt)]
-        | Cst_func((Add|Sub|Mul|Div|Mod), _) ->
-            [(arg_type, TInt)]
+        | Cst_func(Print, _) -> 
+            [(ret_type, TUnit)]  (* Print retourne toujours Unit *)
         | _ -> [] in
       let constraints = (f_type, TFunc([], arg_type, ret_type)) :: 
                        (extra_constraints @ f_constraints @ arg_constraints) in
