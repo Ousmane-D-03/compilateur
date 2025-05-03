@@ -1,1 +1,0 @@
-../../../../../../default/language/typer_naive.mli

@@ -44,23 +44,13 @@ let type_of_built_in = function
 let rec solve_constraints = function
   | [] -> []
   | (t1, t2) :: rest ->
-      match (t1, t2) with
-      | (TUniv n1, TUniv n2) ->
-          let subst = [(min n1 n2, TUniv(max n1 n2))] in
-          let rest' = List.map (fun (t1, t2) ->
-            Type_system.substitute_constraint (max n1 n2) (TUniv(min n1 n2)) (t1, t2)) rest in
-          subst @ solve_constraints rest'
-      | (TUniv n, t) | (t, TUniv n) when not (List.mem n (Type_system.get_free_type_var t)) ->
-          let subst = [(n, t)] in
-          let rest' = List.map (fun (t1, t2) ->
-            Type_system.substitute_constraint n t (t1, t2)) rest in
-          subst @ solve_constraints rest'
-      | (TList(_, t1), TList(_, t2)) ->
-          solve_constraints ((t1, t2) :: rest)
-      | (TFunc(_, a1, r1), TFunc(_, a2, r2)) ->
-          solve_constraints ((a1, a2) :: (r1, r2) :: rest)
-      | (t1, t2) when t1 = t2 -> solve_constraints rest
-      | _ -> raise (Constraint_error(t1, t2))
+      try
+        let subst = Type_system.unify t1 t2 in
+        let rest' = List.map (fun (t1, t2) ->
+          (Type_system.apply_subst_in_type subst t1,
+           Type_system.apply_subst_in_type subst t2)) rest in
+        subst @ solve_constraints rest'
+      with Failure _ -> raise (Constraint_error(t1, t2))
 
 let instantiate counter type_lang =
   let fresh_var () = TUniv(Counter.get_fresh counter) in

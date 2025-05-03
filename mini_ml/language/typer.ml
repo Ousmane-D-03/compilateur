@@ -2,11 +2,6 @@ open Type_system
 open Ast
 open Typer_util
 
-let get_expr_type e = 
-  match Annotation.get_type (get_expr_annotation e) with
-  | Some t -> t
-  | None -> TUniv(0)
-
 let rec type_expr counter env = function
   | Var(x, ann) -> 
       let t = match Util.Environment.get env x with
@@ -20,7 +15,7 @@ let rec type_expr counter env = function
       let (arg_type, arg_constraints) = type_expr counter env arg in
       let ret_type = TUniv(Counter.get_fresh counter) in
       let extra_constraints = match f with
-        | App(Cst_func((Add|Sub|Mul|Div|Mod), _), e1, _) -> 
+        | App(Cst_func((Add|Sub|Mul|Div|Mod), _), _, _) -> 
             [(arg_type, TInt); (ret_type, TInt)]
         | Cst_func((Add|Sub|Mul|Div|Mod), _) ->
             [(arg_type, TInt)]
@@ -34,7 +29,7 @@ let rec type_expr counter env = function
       let count_before = Counter.get_fresh counter in
       let e1_env = Util.Environment.copy env in
       
-      let (t1, c1) = 
+      let (_, c1) = 
         if is_rec then
           let t_var = TUniv(Counter.get_fresh counter) in
           (* Détection et forçage du type pour les fonctions arithmétiques *)

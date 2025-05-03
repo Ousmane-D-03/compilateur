@@ -139,3 +139,24 @@ let generalize_type_expr floor expr =
   let t, subst = normalise_type floor t in
   type_substitution_in_expr expr (List.map (fun (a, i) -> (a, TUniv i)) subst);
   t
+
+let rec occurs_check n = function
+  | TUniv m -> n = m
+  | TFunc(_, t1, t2) -> occurs_check n t1 || occurs_check n t2
+  | TList(_, t) -> occurs_check n t
+  | _ -> false
+
+let rec unify t1 t2 =
+  match (t1, t2) with
+  | (t1, t2) when t1 = t2 -> []
+  | (TUniv n, t) when not (occurs_check n t) -> [(n, t)]
+  | (t, TUniv n) when not (occurs_check n t) -> [(n, t)]
+  | (TFunc(_, arg1, res1), TFunc(_, arg2, res2)) ->
+      let s1 = unify arg1 arg2 in
+      let res1' = apply_subst_in_type s1 res1 in
+      let res2' = apply_subst_in_type s1 res2 in
+      let s2 = unify res1' res2' in
+      s1 @ s2
+  | (TList(_, t1), TList(_, t2)) ->
+      unify t1 t2
+  | _ -> failwith "Unification failed"
